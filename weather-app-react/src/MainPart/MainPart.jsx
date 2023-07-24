@@ -1,27 +1,16 @@
 import styles from "./MainPart.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import { useEffect, useState } from "react";
-// import { getWeatherData } from "../services/weather";
+import { getWeatherData } from "../services/weather";
 const MainPart = () => {
  
 
   const [data, setData] = useState({});
   const [location, setLocation] = useState("delhi");
   useEffect(() => {
-  return fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=RYVV9DWE4U9X44MNEJXU9ZCTS&contentType=json`,
-    {
-      method: "GET",
-      headers: {},
-    }
-  )
-    .then((response) => {
-      response.json();
-      console.log(response);
-    })
-    .then((details) => {
+   getWeatherData(location).then((details)=>{
       console.log(details);
-    });  
+    })  
   }, [location]);
   const searchLocation = (city) => {
     console.log(city);
