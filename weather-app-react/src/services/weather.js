@@ -1,9 +1,16 @@
 export const getWeatherData=(location)=>{
-    const apiKey = "49c2c32f2a042a0ce964d3573d7d0e2f";
-    return  fetch(
-      `api.openweathermap.org/data/2.5/forecast/daily?q=${location}&units=metric&cnt=7&appid=${apiKey}`
-    ).then((res)=>{
-     res.json()
-     console.log(res)
-    })
+    // const apiKey = "695f22d4315580369d9fbe55aea4d5c4";
+    return fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=RYVV9DWE4U9X44MNEJXU9ZCTS&contentType=json`, {
+  "method": "GET",
+  "headers": {
+  }
+  })
+.then(response => {
+  response.json();
+  console.log(response)
+})
+.catch(err => {
+  console.error(err);
+});
+
 }

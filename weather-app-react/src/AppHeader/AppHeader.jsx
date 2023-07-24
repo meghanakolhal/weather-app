@@ -11,8 +11,11 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 const AppHeader = ({ searchLocation }) => {
   const styles = {
     backgroundImage:
-      ' url( "https://images.dailykos.com/images/1183432/story_image/bluesky.jpg?1682792002")',
-    minHeight: "5em",
+      ' url( "https://images.dailykos.com/images/1183432/story_image/bluesky.jpg?1682792002") ',
+      backgroundRepeat:'no-repeat',
+      backgroundPosition:' center center',
+      backgroundSize:'cover',
+    minHeight: "4em",
   };
   const [city, setCity] = useState("");
   const searchHandler = (e) => {
@@ -43,7 +46,7 @@ const btnClickHandler=()=>{
               placement="end"
             >
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}` }>
                   Search Your city
                 </Offcanvas.Title>
               </Offcanvas.Header>
@@ -75,7 +78,7 @@ const btnClickHandler=()=>{
                     onChange={searchHandler}
                   />
                   <Button
-                    style={{}}
+                    style={{background:'white'}}
                     variant="outline-success"
                     onClick={btnClickHandler}
                   >
