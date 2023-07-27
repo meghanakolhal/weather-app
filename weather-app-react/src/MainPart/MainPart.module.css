@@ -3,21 +3,20 @@
     min-height: 80vh;
     display: flex;
     flex-direction: column;
-    border: .5px solid rgb(179, 228, 244);
-    border-radius: 9px;
-    box-shadow: 6px 5px 10px rgb(179, 226, 241);
-
+    /* background-color: #394d75; */
 }
 
 .upperDiv {
     display: flex;
     justify-content: space-between;
-
-    border: 1px solid grey;
+    color: rgb(17, 118, 152);
+    border: 0px solid rgb(179, 228, 244);
     box-shadow: 6px 5px 5px rgb(186, 225, 238);
     flex-wrap: wrap;
     border-radius: 4px;
     padding: 1em;
+    height: 9em;
+    background: rgb(230, 240, 243);
 }
 
 .details {
@@ -29,17 +28,26 @@
     display: flex;
     /* border: 2px solid orange; */
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 18px;
 }
 
-.tempDay {}
+.tempDay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 30px;
+    color: rgb(17, 118, 152);
+}
 
 .weeklyUpdate {
     border: 2px sol1id green;
     min-height: 13.5vh;
-    padding: 5px;
+    padding: 0em;
     margin-top: 0.5em;
+
 }
 
 .makeItRow {
@@ -48,29 +56,66 @@
     padding: 0;
 }
 
-.impPlace {
+.inpPlace {
     display: flex;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;
     width: 8em;
+    border: 2px solid rgb(193, 191, 191);
+    margin-top: 0em;
+    padding: 4px;
+    height: 2em;
+    font-size: 18px;
+    /* border: 2px solid salmon; */
     flex-direction: column;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgb(186, 225, 238);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.description {
+    /* border: 2px solid red; */
+    min-width: 40em;
+    font-size: 16px;
+}
+
+.temp {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 52px;
+    margin-bottom: 0em;
+    color: rgb(46, 138, 169);
+    text-shadow: 2px 2px 5px rgb(46,
+            138,
+            169);
 }
 
 .highlight {
+
+    color: rgb(20, 80, 99);
     margin-right: 0;
     padding: 20px;
-    border: 1px solid grey;
+    border: 0px solid rgb(179, 228, 244);
     box-shadow: 6px 5px 5px rgb(186, 225, 238);
     border-radius: 6px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    font-size: 18px;
+    background: rgb(230, 240, 243);
+}
+
+.HighlightHeading {
+    margin-top: 20px;
+    color: rgb(20, 80, 99);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-shadow: 2px 2px 2px rgb(133, 212, 238);
+    font-weight: 700;
+    font-size: 22px;
 }
 
 .Card {
     margin: 1em 2em 0.2em 0;
-    border: 1px solid rgb(179, 228, 244);
-
+    border: 0px solid rgb(179, 228, 244);
+background: white;
     border-radius: 6px;
     box-shadow: 6px 5px 10px rgb(73, 197, 238);
     box-sizing: border-box;
@@ -82,12 +127,13 @@
 
 }
 
-.innerCard {
+/* .innerCard {
     display: flex;
     flex-direction: column;
     padding: 0em;
     margin: 0em;
-}
+    background: white;
+} */
 
 .greyIt {
     color: grey;
@@ -95,17 +141,33 @@
 
 .smallCardContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    padding: 15px 10px 15px 10px;
+    border: 0px solid rgb(179, 228, 244);
+    box-shadow: 6px 5px 5px rgb(186, 225, 238);
+    margin-left: 0em;
+    margin-right: 0em;
+    background: rgb(230, 240, 243);
 }
 
 .smallCards {
-    border: 1px solid rgb(179, 228, 244);
+    border: 0px solid rgb(179, 228, 244);
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 5em;
-    font-size: 16px;
     border-radius: 6px;
-    box-shadow: 6px 5px 15px rgb(73, 197, 238);
+    box-shadow: 6px 5px 5px rgb(162, 221, 240);
     margin-right: 4px;
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 18px;
+    background: white;
 }
+.errorMsg{
+        color: red;  
+    font-weight: 800;
+     text-align: center;
+    }

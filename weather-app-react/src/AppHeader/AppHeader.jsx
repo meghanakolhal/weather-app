@@ -78,9 +78,11 @@ const btnClickHandler=()=>{
                     onChange={searchHandler}
                   />
                   <Button
-                    style={{background:'white'}}
+                    style={{background:'white',width:'5em',height:'1.8em'}}
+                    className='btn-close'
                     variant="outline-success"
                     onClick={btnClickHandler}
+                    disabled={!city.length}
                   >
                     Search
                   </Button>
