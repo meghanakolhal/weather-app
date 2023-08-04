@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -7,25 +7,29 @@ import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from "react-bootstrap/Offcanvas";
 
+
 // eslint-disable-next-line react/prop-types
-const AppHeader = ({ searchLocation }) => {
+const AppHeader = ({ searchLocation, cityName }) => {
   const styles = {
     backgroundImage:
       ' url( "https://images.dailykos.com/images/1183432/story_image/bluesky.jpg?1682792002") ',
-      backgroundRepeat:'no-repeat',
-      backgroundPosition:' center center',
-      backgroundSize:'cover',
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: " center center",
+    backgroundSize: "cover",
     minHeight: "4em",
+    opacity:'0.7',
+   
   };
-  const [city, setCity] = useState("");
+  // const [city, setCity] = useState("");
   const searchHandler = (e) => {
-    setCity(e.target.value);
-
+    // setCity(e.target.value);
+    cityName(e.target.value);
   };
-const btnClickHandler=()=>{
-  searchLocation(city);
-  setCity('')
-}
+  const btnClickHandler = () => {
+    searchLocation();
+  
+  };
+  
   return (
     <div style={{ marginBottom: "0" }}>
       {["xxl"].map((expand) => (
@@ -36,7 +40,15 @@ const btnClickHandler=()=>{
           style={styles}
         >
           <Container fluid>
-            <Navbar.Brand style={{ color: "white" }} href="#">
+            <Navbar.Brand
+              href="#"
+              style={{
+                color: "white",
+                fontWeight: "1000",
+                fontSize: "25px",
+                textShadow: "rgb(9,103,177) 5px 0px 1px",
+              }}
+            >
               Weather App
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
@@ -46,7 +58,7 @@ const btnClickHandler=()=>{
               placement="end"
             >
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}` }>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                   Search Your city
                 </Offcanvas.Title>
               </Offcanvas.Header>
@@ -74,15 +86,19 @@ const btnClickHandler=()=>{
                     placeholder="Search city"
                     className="me-2"
                     aria-label="Search"
-                    value={city}
+                    // value={city}
                     onChange={searchHandler}
                   />
                   <Button
-                    style={{background:'white',width:'5em',height:'1.8em'}}
-                    className='btn-close'
+                    style={{
+                      background: "white",
+                      width: "5em",
+                      height: "1.8em",
+                    }}
+                    className="btn-close"
                     variant="outline-success"
                     onClick={btnClickHandler}
-                    disabled={!city.length}
+                    // disabled={!city.length}
                   >
                     Search
                   </Button>

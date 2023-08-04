@@ -1,169 +1,233 @@
 import styles from "./MainPart.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import { useEffect, useState } from "react";
-import { getWeatherData } from "../services/weather";
+import { getCurrentPosition, getWeatherInfo } from "../services/weather";
 import Loader from "../Loader/Loader";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import { getGeoLocation } from "../services/getGeoLocation";
+import thunder from "../images/thunder.png";
+import rain from "../images/rain.png";
+import partially_cloudy from "../images/partly-cloudy-day.png";
+import IMG from "../images/images";
 const MainPart = () => {
-   const [data, setData] = useState({});
+  const [data, setData] = useState({});
   const [location, setLocation] = useState("");
+  const [disableGeo, setDisableGeo] = useState(true);
   const [weeklyData, setWeeklyData] = useState([]);
   const [isLoader, setIsLoader] = useState(false);
   const [isError, setIsError] = useState(false);
-const [latitude,setLatitude]=useState()
-const [longitude, setLongitude] = useState();
-useEffect(() => {
-  {
-    !location.length &&
-        navigator.geolocation.getCurrentPosition((position) => {
-          // console.log(position);
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        });
-      fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`,{
-        method:'GET'
-      }).then((res)=>res.json()).then((place)=>{
-        // console.log(place.address.city,place.address.state,place.address.country,place.address.neighbourhood)
-      setLocation(place.address.city);})
-    }
-      
-    {location.length && 
-      setIsLoader(true);
-      getWeatherData(location)
-        .then((details) => {
-          // console.log(details);
-          setIsError(false);
-          setData(details);
-          setWeeklyData(details.days);
-          setIsLoader(false);
+  // const [isSearching, setIsSearching] = useState(false);
+  // console.log(IMG);
+  // console.log(thunder);
+  useEffect(() => {
+    // setDisableGeo(false);
+
+    setIsLoader(true);
+    if (disableGeo) {
+      getGeoLocation()
+        .then((res) => {
+          console.log(res.coords);
+          getCurrentPosition(res.coords.latitude, res.coords.longitude)
+            .then((val) => {
+              console.log(val);
+              getWeatherInfo(val.address.city)
+                .then((details) => {
+                  setData(details);
+                  setWeeklyData(details.days);
+                  setLocation("");
+                  setIsLoader(false);
+                })
+                .catch((err) => {
+                  setIsLoader(false);
+                  setIsError(true);
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              setIsLoader(false);
+              setIsError(true);
+            });
         })
+        // eslint-disable-next-line no-unused-vars
         .catch((err) => {
-          setIsError(true);
-          setIsLoader(false);
-          console.log(err);
+          alert("Kindly turn on your location to get current place weather");
+          getWeatherInfo("delhi")
+            .then((details) => {
+              console.log(details);
+              setData(details);
+              setWeeklyData(details.days);
+              setLocation("");
+              setIsLoader(false);
+            })
+            .catch((err) => {
+              setIsLoader(false);
+              setIsError(true);
+              console.log(err);
+            });
         });
-    
     }
-  }, [location,latitude,longitude]);
-  // console.log(weeklyData);
-  const searchLocation = (city) => {
-    console.log(city);
+  }, [disableGeo]);
+
+  const getSearchData = () => {
+    setDisableGeo(false);
+    setIsLoader(true);
+    setIsError(false);
+    console.log(location);
+    getWeatherInfo(location)
+      .then((details) => {
+        console.log(details);
+        setData(details);
+        setWeeklyData(details.days);
+        setLocation("");
+        setIsLoader(false);
+      })
+      .catch((err) => {
+        setIsLoader(false);
+        setIsError(true);
+        setTimeout(() => {
+          setIsError(false);
+        }, 4000);
+        setLocation("delhi");
+        console.log(err);
+      });
+  };
+  const cityName = (city) => {
     setLocation(city);
   };
+  console.log(location);
+  console.log(weeklyData);
+  const searchLocation = () => {
+    // console.log(city);
+    // setLocation(city);
+    getSearchData();
+    // setIsSearching(true);
+    setDisableGeo(false);
+  };
+console.log(data)
   const weeklyUpdates = weeklyData.map((ele, index) => {
     return (
       <div key={index} className={styles.smallCards}>
-        <p style={{ marginBottom: "0rem" }}>{ele.datetime}</p>
-        {ele.icon.includes("rain") && (
-          <>
-            <img
-              src="https://th.bing.com/th/id/R.f0f1c51ac366d7438e3096e2be55be20?rik=dPKbLRzvR3XbFQ&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fKTj%2fXdg%2fKTjXdgyEc.png&ehk=8AoUI8xMdGDzlsSuJRtoS2nnTSD%2fuYoqDeB1khHvS5g%3d&risl=&pid=ImgRaw&r=0"
-              width="30px"
-            />
-          </>
-        )}
-        {ele.icon.includes("light") && (
-          <>
-            <img
-              src="https://th.bing.com/th/id/R.f0f1c51ac366d7438e3096e2be55be20?rik=dPKbLRzvR3XbFQ&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fKTj%2fXdg%2fKTjXdgyEc.png&ehk=8AoUI8xMdGDzlsSuJRtoS2nnTSD%2fuYoqDeB1khHvS5g%3d&risl=&pid=ImgRaw&r=0"
-              width="30px"
-            />
-          </>
-        )}
-        {ele.icon.includes("cloud") && (
-          <>
-            <img
-              src="https://thumbs.dreamstime.com/b/blue-3d-cloud-icons-24947347.jpg"
-              width="30px"
-            />
-          </>
-        )}
-        <p>23°C </p>
+        <div className={styles.weekDate}>{ele.datetime}</div>
+        <div className={styles.weekInnerDiv}>
+          <img src={IMG[ele.icon] }  style={{paddingBottom:'2em'}} width="40px" />
+          <div className={styles.minmaxOfWeek}>
+            <div>{ele.tempmax} °C </div>
+            <div>{ele.tempmin} °C</div>
+          </div>
+        </div>
       </div>
     );
   });
   return (
     <>
-      <AppHeader searchLocation={searchLocation} />
+      <AppHeader searchLocation={searchLocation} cityName={cityName} />
 
       <div className={styles.container}>
-        {/* {console.log(isLoader)} */}
         {isLoader && <Loader />}
         {!isLoader && (
           <>
             {isError && (
               <>
-                <p className={styles.errorMsg}>
-                  !!Please enter a valid Name of the Place
-                </p>{" "}
-                {setTimeout(() => {
-                  setIsError(false);
-                }, 6000)}
+                <ErrorMsg />
               </>
             )}
             {!isError && (
               <>
-                <div className={styles.upperDiv}>
-                  <div className={styles.inpPlace}>
-                    {data.resolvedAddress ? (
-                      <p> {data.resolvedAddress} </p>
-                    ) : null}
-
-                    {data.days ? <p>{data.days[0].datetime}</p> : null}
-
-                    {/* {data.description ? (
-              <>
-                <p className={styles.description}>
-                  {" "}
-                  Description : {data.description}
-                </p>
-              </>
-            ) : null} */}
-                  </div>
-                  <div className={styles.tempDay}>
-                    {data.currentConditions ? (
-                      <p className={styles.temp}>
-                        {data.currentConditions.temp} °C
+                <div
+                  className={styles.upperDiv}
+                  style={{
+                    backgroundImage:
+                      ' url("https: //assets.msn.com/weathermapdata/1/static/background/v2.0/compactads3/Rain 2.png")',
+                  }}
+                >
+                  <div className={styles.placeTime}>
+                    {data.resolvedAddress && <p>{data.resolvedAddress}</p>}
+                    {data.currentConditions && (
+                      <p style={{ marginTop: "-1em" }}>
+                        {data.currentConditions.datetime} Hrs
                       </p>
-                    ) : null}
+                    )}
                   </div>
-                  <div className={styles.details}>
-                    {data.currentConditions &&
-                      data.currentConditions.icon.includes("light") && (
+                  <div className={styles.rainTemp}>
+                    {data.currentConditions && data.currentConditions.icon && (
+                      <>
+                        {" "}
+                        <img
+                          src={IMG[data.currentConditions.icon]}
+                          width="100px"
+                          // height="70px"
+                        />
+                      </>
+                    )}
+                    <div className={styles.tempDay}>
+                      {data.currentConditions ? (
+                        <p className={styles.temp}>
+                          {data.currentConditions.temp} °C
+                        </p>
+                      ) : null}
+                    </div>
+                    <div className={styles.feelsLike}>
+                      {data.currentConditions && (
                         <>
-                          {" "}
-                          <img
-                            src="https://th.bing.com/th/id/R.f0f1c51ac366d7438e3096e2be55be20?rik=dPKbLRzvR3XbFQ&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fKTj%2fXdg%2fKTjXdgyEc.png&ehk=8AoUI8xMdGDzlsSuJRtoS2nnTSD%2fuYoqDeB1khHvS5g%3d&risl=&pid=ImgRaw&r=0"
-                            width="70px"
-                            height="70px"
-                          />
+                          <div style={{ fontWeight: "700", fontSize: "22px" }}>
+                            {data.currentConditions.conditions}
+                          </div>
+                          <div style={{ fontSize: "18px" }}>
+                            Feels Like{" "}
+                            {Math.floor(data.currentConditions.feelslike)} °C
+                          </div>
                         </>
                       )}
-                    {data.currentConditions &&
-                      data.currentConditions.icon.includes("mist") && (
-                        <img
-                          src="https://th.bing.com/th/id/R.d94a8cea609a24c5f3cddea6b7eca593?rik=4Rm6bJQ1D5ADmA&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fdcr%2fok5%2fdcrok5qdi.jpeg&ehk=CP7KesI1qXA0S4g2J%2bVBTenfRbTv8aVaIFh%2b79935Uw%3d&risl=&pid=ImgRaw&r=0"
-                          width="70px"
-                        />
+                    </div>
+                  </div>
+
+                  <div>
+                    {data.description && (
+                      <>
+                        <div style={{fontSize:'18px'}}>{data.description}</div>
+                      </>
+                    )}
+                  </div>
+                  <div className={styles.lastpartOfUpperDiv}>
+                    <div className={styles.minorInfo}>
+                      {data.currentConditions && (
+                        <>
+                          <p style={{ fontWeight: "400" }}>Cloud cover</p>
+                          <div style={{ marginTop: "-1em", fontWeight: "400" }}>
+                            {data.currentConditions.cloudcover} %
+                          </div>
+                        </>
                       )}
-                    {data.currentConditions &&
-                      data.currentConditions.icon.includes("cloud") &&
-                      data.currentConditions.conditions.includes("clouds") && (
-                        <img
-                          src="https://thumbs.dreamstime.com/b/blue-3d-cloud-icons-24947347.jpg"
-                          width="80px"
-                        />
+                    </div>
+                    <div className={styles.minorInfo}>
+                      {data.currentConditions && (
+                        <>
+                          <p style={{ fontWeight: "400" }}>Dew Point</p>
+                          <div style={{ marginTop: "-1em", fontWeight: "400" }}>
+                            {data.currentConditions.dew} °C
+                          </div>
+                        </>
                       )}
-                    {data.currentConditions &&
-                      data.currentConditions.icon.includes("cloudy") && (
-                        <img
-                          src="https://www.pinclipart.com/picdir/big/422-4224808_top-partly-cloudy-with-sun-weather-icon-clip.png"
-                          width="80px"
-                        />
+                    </div>
+                    <div className={styles.minorInfo}>
+                      {data.currentConditions && (
+                        <>
+                          <p style={{ fontWeight: "400" }}>Pressure </p>
+                          <div style={{ marginTop: "-1em", fontWeight: "400" }}>
+                            {data.currentConditions.pressure} mb
+                          </div>
+                        </>
                       )}
-                    <div className={styles.mistRain}>
-                      {data.currentConditions ? (
-                        <p>{data.currentConditions.conditions}</p>
-                      ) : null}
+                    </div>
+                    <div className={styles.minorInfo}>
+                      {data.currentConditions && (
+                        <>
+                          <p style={{ fontWeight: "400" }}>Wind Direction</p>
+                          <div style={{ marginTop: "-1em", fontWeight: "400" }}>
+                            {data.currentConditions.winddir} °
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -171,7 +235,7 @@ useEffect(() => {
                 <div className={styles.highlight}>
                   <div className={styles.Card}>
                     <div className={styles.innerCard}>
-                      <p style={{ marginBottom: "0rem" }}>Wind Status</p>
+                      <p style={{ marginBottom: "0rem" }}>Wind Speed</p>
                       {data.currentConditions ? (
                         <p className={styles.greyIt}>
                           {data.currentConditions.windspeed} km/hr

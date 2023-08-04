@@ -5,8 +5,89 @@
     flex-direction: column;
     /* background-color: #394d75; */
 }
+.rainTemp{
+    display: flex;
+flex-wrap: wrap;
+/* border: 2px solid ; */
 
-.upperDiv {
+}
+.upperDiv{
+    font-weight: 500;
+    text-shadow: 2px 2px 5px rgb(46,
+                138,
+                169);
+                color: rgb(17, 118, 152);
+    display: flex;
+        flex-direction: column;
+        border: 0px solid rgb(179, 228, 244);
+        box-shadow: 6px 5px 5px rgb(186, 225, 238);
+        min-height: 13em;
+        justify-content: center;
+        align-items: flex-start;
+        padding:10px;
+    background: rgb(230, 240, 243);
+       
+}
+img{
+    margin:10px;
+}
+.temp {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 52px;
+    margin-bottom: 0em;
+    color: rgb(46, 138, 169);
+    text-shadow: 2px 2px 5px rgb(46,
+            138,
+            169);
+            margin:20px 0;
+}
+.feelsLike{
+        display: flex;
+            flex-direction: column;
+            /* border: 2px solid red; */
+            justify-content: center;
+            padding: 10px;
+            margin: 0 10px 0 10px;
+            text-shadow: 2px 2px 5px rgb(46,
+                        138,
+                        169);
+}
+.weekInnerDiv{
+    display: flex;
+    font-size: 14px;
+}
+.weekDate{
+    font-size: 13px;
+padding-bottom: 8px;
+    margin-left: -3em;
+    font-weight: 600;
+        text-shadow: 2px 2px 5px rgb(46,
+                    138,
+                    169);
+            color: rgb(17, 118, 152);
+    /* border: 2px solid red; */
+}
+.minmaxOfWeek{
+    text-shadow: 2px 2px 5px rgb(46,
+                138,
+                169);
+        color: rgb(17, 118, 152);
+            font-weight: 600;
+}
+.lastpartOfUpperDiv{
+    display: flex;
+    /* border: 2px solid; */
+   flex-wrap: wrap;
+}
+.minorInfo{
+    /* border: 0.5px solid; */
+    margin-right: 1.5em;
+
+    padding: 4px;
+    /* box-shadow: 2px 2px 5px rgb(162, 221, 240); */
+    border-radius: 2px;
+}
+/* .upperDiv {
     display: flex;
     justify-content: space-between;
     color: rgb(17, 118, 152);
@@ -16,8 +97,11 @@
     border-radius: 4px;
     padding: 1em;
     height: 9em;
+    
     background: rgb(230, 240, 243);
-}
+    background-image: url('https: //assets.msn.com/weathermapdata/1/static/background/v2.0/compactads3/Rain 2.png');
+background-image: url("https: //assets.msn.com/weathermapdata/1/static/background/v2.0/test/overview/mostcloudy_sunset.png")
+} */
 
 .details {
     margin-top: 0em;
@@ -39,7 +123,7 @@
     flex-direction: column;
     align-items: center;
     font-size: 30px;
-    color: rgb(17, 118, 152);
+    color: rgb(6, 52, 67);
 }
 
 .weeklyUpdate {
@@ -70,6 +154,7 @@
     border-radius: 4px;
     box-shadow: 2px 2px 5px rgb(186, 225, 238);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  
 }
 
 .description {
@@ -78,15 +163,7 @@
     font-size: 16px;
 }
 
-.temp {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 52px;
-    margin-bottom: 0em;
-    color: rgb(46, 138, 169);
-    text-shadow: 2px 2px 5px rgb(46,
-            138,
-            169);
-}
+
 
 .highlight {
 
@@ -124,7 +201,10 @@ background: white;
     height: 4.5em;
     justify-content: space-between;
     padding: 4px;
-
+text-shadow: 2px 2px 5px rgb(46,
+            138,
+            169);
+    color: rgb(17, 118, 152);
 }
 
 /* .innerCard {
